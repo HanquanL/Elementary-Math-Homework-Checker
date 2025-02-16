@@ -33,6 +33,7 @@ int expectedLineNumber = 1;
 %left EQ GT LT    /* Comparison operators: equality, greater than, less than */
 %left PLUS MINUS    /* left means left-associativity. */
 %left DIV MUL
+%left LPAREN RPAREN 
 
 %%
 
