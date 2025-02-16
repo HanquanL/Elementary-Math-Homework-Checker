@@ -6,7 +6,7 @@ int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
-std::vector<int> outputResults;
+std::vector<std::string> outputResults;
 std::vector<std::string> inputExpres;
 int lineNumber = 1;
 int expectedLineNumber = 1;
@@ -21,11 +21,11 @@ int expectedLineNumber = 1;
 %start prog
 
 %token LPAREN RPAREN
-%token PLUS MINUS MUL DIV
+%token PLUS MINUS MUL DIV EQ GT LT
 %token <val> NUM    /* 'val' is the (only) field declared in %union
                        which represents the type of the token. */
 
-%type <val> expr
+%type <val> expr comparison equation inequality inputChain
 
 /* Resolve the ambiguity of the grammar by defining precedence. */
 
@@ -42,15 +42,33 @@ prog : expr_list                        {
         }
      ;
 
-expr_list : expr '\n'                   { 
-            outputResults.push_back($1); 
+expr_list : comparison '\n'                   { 
+            outputResults.push_back($1 ? "Yes" : "No"); 
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string($1));
         }
-          | expr_list expr '\n'         { 
-            outputResults.push_back($2); 
+          | expr_list comparison '\n'         { 
+            outputResults.push_back($2 ? "Yes" : "No"); 
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string($2));
         }
           ;
+
+comparison : equation                        { $$ = $1; }
+           | inequality                      { $$ = $1; }
+           | inputChain                      { $$ = $1; }
+           ;
+
+equation : expr EQ expr                      { $$ = ($1 == $3); }
+         ;
+
+inequality : expr GT expr                    { $$ = ($1 > $3); }
+           | expr LT expr                    { $$ = ($1 < $3); }
+           ;
+
+inputChain : expr GT expr GT expr                 { $$ = ($1 > $3 && $3 > $5); }
+           | expr LT expr LT expr                 { $$ = ($1 < $3 && $3 < $5); }
+           | expr GT expr LT expr                 { $$ = ($1 > $3 && $3 < $5); }
+           | expr LT expr GT expr                 { $$ = ($1 < $3 && $3 > $5); }
+           ;
 
 expr : expr PLUS expr                   { $$ = $1 + $3; }
      | expr MINUS expr                  { $$ = $1 - $3; }

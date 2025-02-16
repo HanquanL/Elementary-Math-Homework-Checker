@@ -18,13 +18,16 @@ extern int expectedLineNumber;
                               exit(1);
                           }
                           expectedLineNumber++; }
-[0-9]+                  { yylval.val = atoi(yytext); return NUM; }
+-?[0-9]+              { yylval.val = atoi(yytext); return NUM; }
 "+"                     { return PLUS; }
 "-"                     { return MINUS; }
 "*"                     { return MUL; }
 "/"                     { return DIV; }
 "("                     { return LPAREN; }
 ")"                     { return RPAREN; }
+"="                     { return EQ; }
+">"                     { return GT; }
+"<"                     { return LT; }
 \n                      { return '\n'; } // Increment line number on newline
 [ \t\r\n]+              { /* Ignore white characters. */ }
 .                       { std::cerr << "Invalid token" << yytext << std::endl; exit(1); }

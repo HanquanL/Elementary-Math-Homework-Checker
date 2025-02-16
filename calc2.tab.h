@@ -60,7 +60,10 @@ extern int yydebug;
     MINUS = 261,                   /* MINUS  */
     MUL = 262,                     /* MUL  */
     DIV = 263,                     /* DIV  */
-    NUM = 264                      /* NUM  */
+    EQ = 264,                      /* EQ  */
+    GT = 265,                      /* GT  */
+    LT = 266,                      /* LT  */
+    NUM = 267                      /* NUM  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -75,7 +78,7 @@ union YYSTYPE
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 79 "calc2.tab.h"
+#line 82 "calc2.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
