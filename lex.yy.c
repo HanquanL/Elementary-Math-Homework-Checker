@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 10
-#define YY_END_OF_BUFFER 11
+#define YY_NUM_RULES 11
+#define YY_END_OF_BUFFER 12
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -365,8 +365,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[17] =
     {   0,
-        0,    0,   11,    9,    8,    8,    6,    7,    4,    2,
-        3,    5,    1,    8,    1,    0
+        0,    0,   12,   10,    9,    8,    6,    7,    4,    2,
+        3,    5,    1,    9,    1,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -451,8 +451,10 @@ char *yytext;
 #include <iostream>
 #include <stdlib.h>
 #include "calc2.tab.h"
-#line 455 "lex.yy.c"
-#line 456 "lex.yy.c"
+
+extern int lineNumber;
+#line 457 "lex.yy.c"
+#line 458 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -669,12 +671,12 @@ YY_DECL
 		}
 
 	{
-#line 9 "hl6255.hwchecker.l"
-
 #line 11 "hl6255.hwchecker.l"
+
+#line 13 "hl6255.hwchecker.l"
                         /* 'val' in 'yylval.val' is the field declared in
                            calc2.y with the %union directive. */
-#line 678 "lex.yy.c"
+#line 680 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -733,56 +735,62 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 13 "hl6255.hwchecker.l"
+#line 15 "hl6255.hwchecker.l"
 { yylval.val = atoi(yytext); return NUM; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "hl6255.hwchecker.l"
+#line 16 "hl6255.hwchecker.l"
 { return PLUS; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "hl6255.hwchecker.l"
+#line 17 "hl6255.hwchecker.l"
 { return MINUS; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "hl6255.hwchecker.l"
+#line 18 "hl6255.hwchecker.l"
 { return MUL; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "hl6255.hwchecker.l"
+#line 19 "hl6255.hwchecker.l"
 { return DIV; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "hl6255.hwchecker.l"
+#line 20 "hl6255.hwchecker.l"
 { return LPAREN; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "hl6255.hwchecker.l"
+#line 21 "hl6255.hwchecker.l"
 { return RPAREN; }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 20 "hl6255.hwchecker.l"
-{ /* Ignore white characters. */ }
+#line 22 "hl6255.hwchecker.l"
+{ ++lineNumber; return '\n';} // Increment line number on newline
 	YY_BREAK
 case 9:
+/* rule 9 can match eol */
 YY_RULE_SETUP
-#line 21 "hl6255.hwchecker.l"
-{ std::cerr << "Invalid token" << std::endl; exit(1); }
+#line 23 "hl6255.hwchecker.l"
+{ /* Ignore white characters. */ }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "hl6255.hwchecker.l"
+#line 24 "hl6255.hwchecker.l"
+{ std::cerr << "Invalid token" << std::endl; exit(1); }
+	YY_BREAK
+case 11:
+YY_RULE_SETUP
+#line 26 "hl6255.hwchecker.l"
 ECHO;
 	YY_BREAK
-#line 786 "lex.yy.c"
+#line 794 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1787,6 +1795,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 23 "hl6255.hwchecker.l"
+#line 26 "hl6255.hwchecker.l"
 
 
