@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 12
-#define YY_END_OF_BUFFER 13
+#define YY_NUM_RULES 15
+#define YY_END_OF_BUFFER 16
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,10 +363,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[18] =
+static const flex_int16_t yy_accept[22] =
     {   0,
-        0,    0,   13,   11,   10,    9,    7,    8,    5,    3,
-        4,    6,    2,   10,    2,    1,    0
+        0,    0,   16,   14,   13,   12,    7,    8,    5,    3,
+        4,    6,    2,   11,    9,   10,   13,    2,    2,    1,
+        0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -376,8 +377,8 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
         5,    6,    7,    1,    8,    1,    9,   10,   10,   10,
-       10,   10,   10,   10,   10,   10,   10,   11,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       10,   10,   10,   10,   10,   10,   10,   11,    1,   12,
+       13,   14,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -401,36 +402,42 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[12] =
-    {   0,
-        1,    2,    2,    1,    1,    1,    1,    1,    1,    1,
-        1
-    } ;
-
-static const flex_int16_t yy_base[19] =
-    {   0,
-        0,    0,   15,   16,    0,    0,   16,   16,   16,   16,
-       16,   16,    2,    0,    0,   16,   16,   12
-    } ;
-
-static const flex_int16_t yy_def[19] =
-    {   0,
-       17,    1,   17,   17,   18,   18,   17,   17,   17,   17,
-       17,   17,   17,   18,   13,   17,    0,   17
-    } ;
-
-static const flex_int16_t yy_nxt[28] =
-    {   0,
-        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-        4,   15,   16,   14,   17,    3,   17,   17,   17,   17,
-       17,   17,   17,   17,   17,   17,   17
-    } ;
-
-static const flex_int16_t yy_chk[28] =
+static const YY_CHAR yy_meta[15] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,   13,   13,   18,    3,   17,   17,   17,   17,   17,
-       17,   17,   17,   17,   17,   17,   17
+        1,    1,    1,    1
+    } ;
+
+static const flex_int16_t yy_base[22] =
+    {   0,
+        0,    0,   27,   28,   13,   15,   28,   28,   28,   28,
+       16,   28,    9,   28,   28,   28,   19,   15,   13,   28,
+       28
+    } ;
+
+static const flex_int16_t yy_def[22] =
+    {   0,
+       21,    1,   21,   21,   21,   21,   21,   21,   21,   21,
+       21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
+        0
+    } ;
+
+static const flex_int16_t yy_nxt[43] =
+    {   0,
+        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
+        4,   14,   15,   16,   17,   17,   17,   17,   19,   20,
+       17,   17,   19,   20,   18,   18,   21,    3,   21,   21,
+       21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
+       21,   21
+    } ;
+
+static const flex_int16_t yy_chk[43] =
+    {   0,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    5,    5,    6,    6,   13,   13,
+       17,   17,   19,   19,   18,   11,    3,   21,   21,   21,
+       21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
+       21,   21
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -455,8 +462,8 @@ char *yytext;
 
 extern int lineNumber; 
 extern int expectedLineNumber;
-#line 459 "lex.yy.c"
-#line 460 "lex.yy.c"
+#line 466 "lex.yy.c"
+#line 467 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -678,7 +685,7 @@ YY_DECL
 #line 14 "hl6255.hwchecker.l"
                         /* 'val' in 'yylval.val' is the field declared in
                            calc2.y with the %union directive. */
-#line 682 "lex.yy.c"
+#line 689 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -705,13 +712,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 18 )
+				if ( yy_current_state >= 22 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 16 );
+		while ( yy_base[yy_current_state] != 28 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -781,28 +788,43 @@ YY_RULE_SETUP
 { return RPAREN; }
 	YY_BREAK
 case 9:
-/* rule 9 can match eol */
 YY_RULE_SETUP
 #line 29 "hl6255.hwchecker.l"
-{ return '\n'; } // Increment line number on newline
+{ return EQ; }
 	YY_BREAK
 case 10:
-/* rule 10 can match eol */
 YY_RULE_SETUP
 #line 30 "hl6255.hwchecker.l"
-{ /* Ignore white characters. */ }
+{ return GT; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 31 "hl6255.hwchecker.l"
-{ std::cerr << "Invalid token" << yytext << std::endl; exit(1); }
+{ return LT; }
 	YY_BREAK
 case 12:
+/* rule 12 can match eol */
+YY_RULE_SETUP
+#line 32 "hl6255.hwchecker.l"
+{ return '\n'; } // Increment line number on newline
+	YY_BREAK
+case 13:
+/* rule 13 can match eol */
 YY_RULE_SETUP
 #line 33 "hl6255.hwchecker.l"
+{ /* Ignore white characters. */ }
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 34 "hl6255.hwchecker.l"
+{ std::cerr << "Invalid token" << yytext << std::endl; exit(1); }
+	YY_BREAK
+case 15:
+YY_RULE_SETUP
+#line 36 "hl6255.hwchecker.l"
 ECHO;
 	YY_BREAK
-#line 806 "lex.yy.c"
+#line 828 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1099,7 +1121,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 18 )
+			if ( yy_current_state >= 22 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1127,11 +1149,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 18 )
+		if ( yy_current_state >= 22 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 17);
+	yy_is_jam = (yy_current_state == 21);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1807,6 +1829,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 33 "hl6255.hwchecker.l"
+#line 36 "hl6255.hwchecker.l"
 
 
