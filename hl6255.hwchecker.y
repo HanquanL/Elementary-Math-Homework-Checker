@@ -1,11 +1,14 @@
 %{
 #include <iostream>
 #include <vector>
+#include <string>
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
 std::vector<int> outputResults;
+std::vector<std::string> inputExpres;
+int lineNumber = 1;
 %}
 
 %union {
@@ -31,11 +34,21 @@ std::vector<int> outputResults;
 
 %%
 
-prog : expr_list                        { for (int res : outputResults) std::cout << res << std::endl; }
+prog : expr_list                        { 
+            for (size_t i = 0; i < outputResults.size(); ++i) {
+                std::cout << (i + 1) << ": " << outputResults[i] << std::endl;
+            }
+        }
      ;
 
-expr_list : expr                        { outputResults.push_back($1); }
-          | expr_list expr              { outputResults.push_back($2); }
+expr_list : expr '\n'                   { 
+            outputResults.push_back($1); 
+            inputExpres.push_back(std::to_string(lineNumber++) + ": " + std::to_string($1));
+        }
+          | expr_list expr '\n'         { 
+            outputResults.push_back($2); 
+            inputExpres.push_back(std::to_string(lineNumber++) + ": " + std::to_string($2));
+        }
           ;
 
 expr : expr PLUS expr                   { $$ = $1 + $3; }
