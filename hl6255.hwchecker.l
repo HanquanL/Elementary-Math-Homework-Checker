@@ -2,8 +2,6 @@
 #include <iostream>
 #include <stdlib.h>
 #include "calc2.tab.h"
-
-extern int lineNumber;
 %}
 
 %option noyywrap
@@ -18,7 +16,6 @@ extern int lineNumber;
 "/"                     { return DIV; }
 "("                     { return LPAREN; }
 ")"                     { return RPAREN; }
-\n                      { ++lineNumber; return '\n';} // Increment line number on newline
 [ \t\r\n]+              { /* Ignore white characters. */ }
 .                       { std::cerr << "Invalid token" << std::endl; exit(1); }
 
