@@ -30,6 +30,7 @@ int expectedLineNumber = 1;
 /* Resolve the ambiguity of the grammar by defining precedence. */
 
 /* Order of directives will determine the precedence. */
+%left EQ GT LT    /* Comparison operators: equality, greater than, less than */
 %left PLUS MINUS    /* left means left-associativity. */
 %left DIV MUL
 
