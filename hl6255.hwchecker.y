@@ -4,6 +4,7 @@
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+int line_num = 1; // global variable to track sequential numbering
 %}
 
 %union {
@@ -15,11 +16,12 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 %start prog
 
 %token LPAREN RPAREN
-%token PLUS MINUS MUL DIV
+%token PLUS MINUS MUL DIV EOL
 %token <val> NUM    /* 'val' is the (only) field declared in %union
                        which represents the type of the token. */
 
 %type <val> expr
+%type <val> expr_list
 
 /* Resolve the ambiguity of the grammar by defining precedence. */
 
@@ -29,8 +31,12 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
 %%
 
-prog : expr                             { std::cout << $1 << std::endl; }
+prog : expr_list                             { /*empty*/ }
      ;
+
+expr_list : expr_list expr EOL          { std::cout << line_num++ << ": " << $2 << std::endl; }
+          | expr EOL                    { std::cout << line_num++ << ": " << $1 << std::endl; }
+          ;
 
 expr : expr PLUS expr                   { $$ = $1 + $3; }
      | expr MINUS expr                  { $$ = $1 - $3; }

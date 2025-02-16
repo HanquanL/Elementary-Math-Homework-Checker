@@ -60,7 +60,8 @@ extern int yydebug;
     MINUS = 261,                   /* MINUS  */
     MUL = 262,                     /* MUL  */
     DIV = 263,                     /* DIV  */
-    NUM = 264                      /* NUM  */
+    EOL = 264,                     /* EOL  */
+    NUM = 265                      /* NUM  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -69,13 +70,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 9 "hl6255.hwchecker.y"
+#line 10 "hl6255.hwchecker.y"
 
     int val;
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 79 "calc2.tab.h"
+#line 80 "calc2.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
