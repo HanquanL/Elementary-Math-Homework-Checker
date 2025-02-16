@@ -25,7 +25,7 @@ int expectedLineNumber = 1;
 %token <val> NUM    /* 'val' is the (only) field declared in %union
                        which represents the type of the token. */
 
-%type <val> expr comparison 
+%type <val> expr comparison equation inequality
 
 /* Resolve the ambiguity of the grammar by defining precedence. */
 
@@ -52,12 +52,16 @@ expr_list : comparison '\n'                   {
         }
           ;
 
-comparison : comparison EQ comparison   { $$ = ($1 && ($1 == $3)); }
-           | comparison GT comparison   { $$ = ($1 && ($1 > $3)); }
-           | comparison LT comparison   { $$ = ($1 && ($1 < $3)); }
-           | expr                       { $$ = $1; }
+comparison : equation                        { $$ = $1; }
+           | inequality                      { $$ = $1; }
            ;
 
+equation : expr EQ expr                      { $$ = ($1 == $3); }
+         ;
+
+inequality : expr GT expr                    { $$ = ($1 > $3); }
+           | expr LT expr                    { $$ = ($1 < $3); }
+           ;
 expr : expr PLUS expr                   { $$ = $1 + $3; }
      | expr MINUS expr                  { $$ = $1 - $3; }
      | expr MUL expr                    { $$ = $1 * $3; }

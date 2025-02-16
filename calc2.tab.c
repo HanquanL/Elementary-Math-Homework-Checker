@@ -127,7 +127,9 @@ enum yysymbol_kind_t
   YYSYMBOL_prog = 15,                      /* prog  */
   YYSYMBOL_expr_list = 16,                 /* expr_list  */
   YYSYMBOL_comparison = 17,                /* comparison  */
-  YYSYMBOL_expr = 18                       /* expr  */
+  YYSYMBOL_equation = 18,                  /* equation  */
+  YYSYMBOL_inequality = 19,                /* inequality  */
+  YYSYMBOL_expr = 20                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -453,18 +455,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  8
+#define YYFINAL  10
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   37
+#define YYLAST   31
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  15
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  27
+#define YYNSTATES  29
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   267
@@ -514,8 +516,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    38,    38,    45,    49,    55,    56,    57,    58,    61,
-      62,    63,    64,    65,    66
+       0,    38,    38,    45,    49,    55,    56,    59,    62,    63,
+      65,    66,    67,    68,    69,    70
 };
 #endif
 
@@ -533,7 +535,8 @@ static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "LPAREN", "RPAREN",
   "PLUS", "MINUS", "MUL", "DIV", "EQ", "GT", "LT", "NUM", "'\\n'",
-  "$accept", "prog", "expr_list", "comparison", "expr", YY_NULLPTR
+  "$accept", "prog", "expr_list", "comparison", "equation", "inequality",
+  "expr", YY_NULLPTR
 };
 
 static const char *
@@ -543,7 +546,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-6)
+#define YYPACT_NINF (-4)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -557,9 +560,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -2,    -2,    -6,     9,    -2,    11,    25,     0,    -6,    16,
-      -2,    -2,    -2,    -6,    -2,    -2,    -2,    -2,    -6,    -6,
-      26,    26,    26,    -5,    -5,    -6,    -6
+      -2,    -2,    -4,     9,    -2,    17,    -4,    -4,    -3,    15,
+      -4,    18,    -4,    -2,    -2,    -2,    -2,    -2,    -2,    -2,
+      -4,    -4,    21,    21,    -4,    -4,    19,    19,    19
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -567,21 +570,21 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,    13,     0,     2,     0,     8,     0,     1,     0,
-       0,     0,     0,     3,     0,     0,     0,     0,    14,     4,
-       5,     6,     7,     9,    10,    11,    12
+       0,     0,    14,     0,     2,     0,     5,     6,     0,     0,
+       1,     0,     3,     0,     0,     0,     0,     0,     0,     0,
+      15,     4,    10,    11,    12,    13,     7,     8,     9
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -6,     7,    -1
+      -4,    -4,    -4,     7,    -4,    -4,    -1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4,     5,     6
+       0,     3,     4,     5,     6,     7,     8
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -589,41 +592,41 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       7,     1,    16,    17,    18,    14,    15,    16,    17,     8,
-       2,     9,     0,    23,    24,    25,    26,    20,    21,    22,
-      10,    11,    12,     0,    13,    10,    11,    12,     0,    19,
-      14,    15,    16,    17,     0,    10,    11,    12
+       9,     1,    13,    14,    15,    16,    17,    18,    19,    10,
+       2,    11,    22,    23,    24,    25,    26,    27,    28,    20,
+      13,    14,    15,    16,    13,    14,    15,    16,    15,    16,
+      12,    21
 };
 
 static const yytype_int8 yycheck[] =
 {
-       1,     3,     7,     8,     4,     5,     6,     7,     8,     0,
-      12,     4,    -1,    14,    15,    16,    17,    10,    11,    12,
-       9,    10,    11,    -1,    13,     9,    10,    11,    -1,    13,
-       5,     6,     7,     8,    -1,     9,    10,    11
+       1,     3,     5,     6,     7,     8,     9,    10,    11,     0,
+      12,     4,    13,    14,    15,    16,    17,    18,    19,     4,
+       5,     6,     7,     8,     5,     6,     7,     8,     7,     8,
+      13,    13
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    12,    15,    16,    17,    18,    18,     0,    17,
-       9,    10,    11,    13,     5,     6,     7,     8,     4,    13,
-      17,    17,    17,    18,    18,    18,    18
+       0,     3,    12,    15,    16,    17,    18,    19,    20,    20,
+       0,    17,    13,     5,     6,     7,     8,     9,    10,    11,
+       4,    13,    20,    20,    20,    20,    20,    20,    20
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    14,    15,    16,    16,    17,    17,    17,    17,    18,
-      18,    18,    18,    18,    18
+       0,    14,    15,    16,    16,    17,    17,    18,    19,    19,
+      20,    20,    20,    20,    20,    20
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     3,     3,     3,     3,     1,     3,
-       3,     3,     3,     1,     3
+       0,     2,     1,     2,     3,     1,     1,     3,     3,     3,
+       3,     3,     3,     3,     1,     3
 };
 
 
@@ -1093,7 +1096,7 @@ yyreduce:
                 std::cout << (i + 1) << ": " << outputResults[i] << std::endl;
             }
         }
-#line 1097 "calc2.tab.c"
+#line 1100 "calc2.tab.c"
     break;
 
   case 3: /* expr_list: comparison '\n'  */
@@ -1102,7 +1105,7 @@ yyreduce:
             outputResults.push_back((yyvsp[-1].val) ? "Yes" : "No"); 
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
         }
-#line 1106 "calc2.tab.c"
+#line 1109 "calc2.tab.c"
     break;
 
   case 4: /* expr_list: expr_list comparison '\n'  */
@@ -1111,65 +1114,71 @@ yyreduce:
             outputResults.push_back((yyvsp[-1].val) ? "Yes" : "No"); 
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
         }
-#line 1115 "calc2.tab.c"
+#line 1118 "calc2.tab.c"
     break;
 
-  case 5: /* comparison: comparison EQ comparison  */
+  case 5: /* comparison: equation  */
 #line 55 "hl6255.hwchecker.y"
-                                        { (yyval.val) = ((yyvsp[-2].val) && ((yyvsp[-2].val) == (yyvsp[0].val))); }
-#line 1121 "calc2.tab.c"
+                                             { (yyval.val) = (yyvsp[0].val); }
+#line 1124 "calc2.tab.c"
     break;
 
-  case 6: /* comparison: comparison GT comparison  */
+  case 6: /* comparison: inequality  */
 #line 56 "hl6255.hwchecker.y"
-                                        { (yyval.val) = ((yyvsp[-2].val) && ((yyvsp[-2].val) > (yyvsp[0].val))); }
-#line 1127 "calc2.tab.c"
+                                             { (yyval.val) = (yyvsp[0].val); }
+#line 1130 "calc2.tab.c"
     break;
 
-  case 7: /* comparison: comparison LT comparison  */
-#line 57 "hl6255.hwchecker.y"
-                                        { (yyval.val) = ((yyvsp[-2].val) && ((yyvsp[-2].val) < (yyvsp[0].val))); }
-#line 1133 "calc2.tab.c"
+  case 7: /* equation: expr EQ expr  */
+#line 59 "hl6255.hwchecker.y"
+                                             { (yyval.val) = ((yyvsp[-2].val) == (yyvsp[0].val)); }
+#line 1136 "calc2.tab.c"
     break;
 
-  case 8: /* comparison: expr  */
-#line 58 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[0].val); }
-#line 1139 "calc2.tab.c"
-    break;
-
-  case 9: /* expr: expr PLUS expr  */
-#line 61 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
-#line 1145 "calc2.tab.c"
-    break;
-
-  case 10: /* expr: expr MINUS expr  */
+  case 8: /* inequality: expr GT expr  */
 #line 62 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
-#line 1151 "calc2.tab.c"
+                                             { (yyval.val) = ((yyvsp[-2].val) > (yyvsp[0].val)); }
+#line 1142 "calc2.tab.c"
     break;
 
-  case 11: /* expr: expr MUL expr  */
+  case 9: /* inequality: expr LT expr  */
 #line 63 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
-#line 1157 "calc2.tab.c"
+                                             { (yyval.val) = ((yyvsp[-2].val) < (yyvsp[0].val)); }
+#line 1148 "calc2.tab.c"
     break;
 
-  case 12: /* expr: expr DIV expr  */
-#line 64 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val); }
-#line 1163 "calc2.tab.c"
+  case 10: /* expr: expr PLUS expr  */
+#line 65 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
+#line 1154 "calc2.tab.c"
     break;
 
-  case 14: /* expr: LPAREN expr RPAREN  */
+  case 11: /* expr: expr MINUS expr  */
 #line 66 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
+#line 1160 "calc2.tab.c"
+    break;
+
+  case 12: /* expr: expr MUL expr  */
+#line 67 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
+#line 1166 "calc2.tab.c"
+    break;
+
+  case 13: /* expr: expr DIV expr  */
+#line 68 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val); }
+#line 1172 "calc2.tab.c"
+    break;
+
+  case 15: /* expr: LPAREN expr RPAREN  */
+#line 70 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-1].val); }
-#line 1169 "calc2.tab.c"
+#line 1178 "calc2.tab.c"
     break;
 
 
-#line 1173 "calc2.tab.c"
+#line 1182 "calc2.tab.c"
 
       default: break;
     }
@@ -1362,7 +1371,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 69 "hl6255.hwchecker.y"
+#line 73 "hl6255.hwchecker.y"
 
 
 int main()
