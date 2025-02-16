@@ -70,12 +70,18 @@
 #line 1 "hl6255.hwchecker.y"
 
 #include <iostream>
-
+#include <vector>
+#include <string>
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
 int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 
-#line 79 "calc2.tab.c"
+std::vector<int> outputResults;
+std::vector<std::string> inputExpres;
+int lineNumber = 1;
+int expectedLineNumber = 1;
+
+#line 85 "calc2.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -113,9 +119,11 @@ enum yysymbol_kind_t
   YYSYMBOL_MUL = 7,                        /* MUL  */
   YYSYMBOL_DIV = 8,                        /* DIV  */
   YYSYMBOL_NUM = 9,                        /* NUM  */
-  YYSYMBOL_YYACCEPT = 10,                  /* $accept  */
-  YYSYMBOL_prog = 11,                      /* prog  */
-  YYSYMBOL_expr = 12                       /* expr  */
+  YYSYMBOL_10_n_ = 10,                     /* '\n'  */
+  YYSYMBOL_YYACCEPT = 11,                  /* $accept  */
+  YYSYMBOL_prog = 12,                      /* prog  */
+  YYSYMBOL_expr_list = 13,                 /* expr_list  */
+  YYSYMBOL_expr = 14                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -441,18 +449,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   19
+#define YYLAST   28
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  10
+#define YYNTOKENS  11
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  10
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  16
+#define YYNSTATES  20
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   264
@@ -470,7 +478,7 @@ union yyalloc
 static const yytype_int8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      10,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -502,7 +510,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    32,    32,    35,    36,    37,    38,    39,    40
+       0,    38,    38,    45,    49,    55,    56,    57,    58,    59,
+      60
 };
 #endif
 
@@ -519,7 +528,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "LPAREN", "RPAREN",
-  "PLUS", "MINUS", "MUL", "DIV", "NUM", "$accept", "prog", "expr", YY_NULLPTR
+  "PLUS", "MINUS", "MUL", "DIV", "NUM", "'\\n'", "$accept", "prog",
+  "expr_list", "expr", YY_NULLPTR
 };
 
 static const char *
@@ -529,7 +539,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-7)
+#define YYPACT_NINF (-4)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -543,8 +553,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       1,     1,    -7,     3,    11,     7,    -7,     1,     1,     1,
-       1,    -7,    -6,    -6,    -7,    -7
+      -2,    -2,    -4,     2,    -2,     7,    20,    -4,    13,    -2,
+      -2,    -2,    -2,    -4,    -4,    -4,    -3,    -3,    -4,    -4
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -552,20 +562,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     7,     0,     2,     0,     1,     0,     0,     0,
-       0,     8,     3,     4,     5,     6
+       0,     0,     9,     0,     2,     0,     0,     1,     0,     0,
+       0,     0,     0,     3,    10,     4,     5,     6,     7,     8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,    -7,    -1
+      -4,    -4,    -4,    -1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4
+       0,     3,     4,     5
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -573,34 +583,38 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       5,     9,    10,     6,     1,     0,    12,    13,    14,    15,
-       2,    11,     7,     8,     9,    10,     7,     8,     9,    10
+       6,     1,     7,     8,    11,    12,     0,     2,    16,    17,
+      18,    19,     9,    10,    11,    12,     0,    13,     9,    10,
+      11,    12,     0,    15,    14,     9,    10,    11,    12
 };
 
 static const yytype_int8 yycheck[] =
 {
-       1,     7,     8,     0,     3,    -1,     7,     8,     9,    10,
-       9,     4,     5,     6,     7,     8,     5,     6,     7,     8
+       1,     3,     0,     4,     7,     8,    -1,     9,     9,    10,
+      11,    12,     5,     6,     7,     8,    -1,    10,     5,     6,
+       7,     8,    -1,    10,     4,     5,     6,     7,     8
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     9,    11,    12,    12,     0,     5,     6,     7,
-       8,     4,    12,    12,    12,    12
+       0,     3,     9,    12,    13,    14,    14,     0,    14,     5,
+       6,     7,     8,    10,     4,    10,    14,    14,    14,    14
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    10,    11,    12,    12,    12,    12,    12,    12
+       0,    11,    12,    13,    13,    14,    14,    14,    14,    14,
+      14
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     3,     3,     3,     3,     1,     3
+       0,     2,     1,     2,     3,     3,     3,     3,     3,     1,
+       3
 };
 
 
@@ -1063,44 +1077,66 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* prog: expr  */
-#line 32 "hl6255.hwchecker.y"
-                                        { std::cout << (yyvsp[0].val) << std::endl; }
-#line 1070 "calc2.tab.c"
-    break;
-
-  case 3: /* expr: expr PLUS expr  */
-#line 35 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
-#line 1076 "calc2.tab.c"
-    break;
-
-  case 4: /* expr: expr MINUS expr  */
-#line 36 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
-#line 1082 "calc2.tab.c"
-    break;
-
-  case 5: /* expr: expr MUL expr  */
-#line 37 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
+  case 2: /* prog: expr_list  */
+#line 38 "hl6255.hwchecker.y"
+                                        { 
+            for (size_t i = 0; i < outputResults.size(); ++i) {
+                std::cout << (i + 1) << ": " << outputResults[i] << std::endl;
+            }
+        }
 #line 1088 "calc2.tab.c"
     break;
 
-  case 6: /* expr: expr DIV expr  */
-#line 38 "hl6255.hwchecker.y"
+  case 3: /* expr_list: expr '\n'  */
+#line 45 "hl6255.hwchecker.y"
+                                        { 
+            outputResults.push_back((yyvsp[-1].val)); 
+            inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
+        }
+#line 1097 "calc2.tab.c"
+    break;
+
+  case 4: /* expr_list: expr_list expr '\n'  */
+#line 49 "hl6255.hwchecker.y"
+                                        { 
+            outputResults.push_back((yyvsp[-1].val)); 
+            inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
+        }
+#line 1106 "calc2.tab.c"
+    break;
+
+  case 5: /* expr: expr PLUS expr  */
+#line 55 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
+#line 1112 "calc2.tab.c"
+    break;
+
+  case 6: /* expr: expr MINUS expr  */
+#line 56 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
+#line 1118 "calc2.tab.c"
+    break;
+
+  case 7: /* expr: expr MUL expr  */
+#line 57 "hl6255.hwchecker.y"
+                                        { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
+#line 1124 "calc2.tab.c"
+    break;
+
+  case 8: /* expr: expr DIV expr  */
+#line 58 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val); }
-#line 1094 "calc2.tab.c"
+#line 1130 "calc2.tab.c"
     break;
 
-  case 8: /* expr: LPAREN expr RPAREN  */
-#line 40 "hl6255.hwchecker.y"
+  case 10: /* expr: LPAREN expr RPAREN  */
+#line 60 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-1].val); }
-#line 1100 "calc2.tab.c"
+#line 1136 "calc2.tab.c"
     break;
 
 
-#line 1104 "calc2.tab.c"
+#line 1140 "calc2.tab.c"
 
       default: break;
     }
@@ -1293,7 +1329,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 43 "hl6255.hwchecker.y"
+#line 63 "hl6255.hwchecker.y"
 
 
 int main()
