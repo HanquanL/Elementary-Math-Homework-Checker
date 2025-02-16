@@ -74,14 +74,15 @@
 #include <string>
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
-int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+int yyerror(const char *p) { std::cerr << "Error: " << p << std::endl; };
 
 std::vector<std::string> outputResults;
 std::vector<std::string> inputExpres;
 int lineNumber = 1;
 int expectedLineNumber = 1;
+bool divisionByZeroError = false; 
 
-#line 85 "calc2.tab.c"
+#line 86 "calc2.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -517,9 +518,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    39,    39,    46,    50,    56,    57,    58,    61,    64,
-      65,    68,    69,    70,    71,    74,    75,    76,    77,    78,
-      79
+       0,    41,    41,    48,    57,    68,    69,    70,    73,    76,
+      77,    80,    81,    82,    83,    86,    87,    88,    89,    97,
+      98
 };
 #endif
 
@@ -1099,125 +1100,142 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* prog: expr_list  */
-#line 39 "hl6255.hwchecker.y"
+#line 41 "hl6255.hwchecker.y"
                                         { 
             for (size_t i = 0; i < outputResults.size(); ++i) {
                 std::cout << (i + 1) << ": " << outputResults[i] << std::endl;
             }
         }
-#line 1109 "calc2.tab.c"
+#line 1110 "calc2.tab.c"
     break;
 
   case 3: /* expr_list: comparison '\n'  */
-#line 46 "hl6255.hwchecker.y"
+#line 48 "hl6255.hwchecker.y"
                                               { 
-            outputResults.push_back((yyvsp[-1].val) ? "Yes" : "No"); 
+            if (divisionByZeroError) {
+                outputResults.push_back("Error: Division By Zero");
+                divisionByZeroError = false;
+            } else {
+                outputResults.push_back((yyvsp[-1].val) ? "Yes" : "No");
+            }
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
         }
-#line 1118 "calc2.tab.c"
+#line 1124 "calc2.tab.c"
     break;
 
   case 4: /* expr_list: expr_list comparison '\n'  */
-#line 50 "hl6255.hwchecker.y"
+#line 57 "hl6255.hwchecker.y"
                                               { 
-            outputResults.push_back((yyvsp[-1].val) ? "Yes" : "No"); 
+            if (divisionByZeroError) {
+                outputResults.push_back("Error: Division By Zero");
+                divisionByZeroError = false;
+            } else {
+                outputResults.push_back((yyvsp[-1].val) ? "Yes" : "No");
+            }
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
         }
-#line 1127 "calc2.tab.c"
+#line 1138 "calc2.tab.c"
     break;
 
   case 5: /* comparison: equation  */
-#line 56 "hl6255.hwchecker.y"
+#line 68 "hl6255.hwchecker.y"
                                              { (yyval.val) = (yyvsp[0].val); }
-#line 1133 "calc2.tab.c"
+#line 1144 "calc2.tab.c"
     break;
 
   case 6: /* comparison: inequality  */
-#line 57 "hl6255.hwchecker.y"
+#line 69 "hl6255.hwchecker.y"
                                              { (yyval.val) = (yyvsp[0].val); }
-#line 1139 "calc2.tab.c"
+#line 1150 "calc2.tab.c"
     break;
 
   case 7: /* comparison: inputChain  */
-#line 58 "hl6255.hwchecker.y"
+#line 70 "hl6255.hwchecker.y"
                                              { (yyval.val) = (yyvsp[0].val); }
-#line 1145 "calc2.tab.c"
+#line 1156 "calc2.tab.c"
     break;
 
   case 8: /* equation: expr EQ expr  */
-#line 61 "hl6255.hwchecker.y"
+#line 73 "hl6255.hwchecker.y"
                                              { (yyval.val) = ((yyvsp[-2].val) == (yyvsp[0].val)); }
-#line 1151 "calc2.tab.c"
+#line 1162 "calc2.tab.c"
     break;
 
   case 9: /* inequality: expr GT expr  */
-#line 64 "hl6255.hwchecker.y"
+#line 76 "hl6255.hwchecker.y"
                                              { (yyval.val) = ((yyvsp[-2].val) > (yyvsp[0].val)); }
-#line 1157 "calc2.tab.c"
+#line 1168 "calc2.tab.c"
     break;
 
   case 10: /* inequality: expr LT expr  */
-#line 65 "hl6255.hwchecker.y"
+#line 77 "hl6255.hwchecker.y"
                                              { (yyval.val) = ((yyvsp[-2].val) < (yyvsp[0].val)); }
-#line 1163 "calc2.tab.c"
+#line 1174 "calc2.tab.c"
     break;
 
   case 11: /* inputChain: expr GT expr GT expr  */
-#line 68 "hl6255.hwchecker.y"
+#line 80 "hl6255.hwchecker.y"
                                                   { (yyval.val) = ((yyvsp[-4].val) > (yyvsp[-2].val) && (yyvsp[-2].val) > (yyvsp[0].val)); }
-#line 1169 "calc2.tab.c"
+#line 1180 "calc2.tab.c"
     break;
 
   case 12: /* inputChain: expr LT expr LT expr  */
-#line 69 "hl6255.hwchecker.y"
+#line 81 "hl6255.hwchecker.y"
                                                   { (yyval.val) = ((yyvsp[-4].val) < (yyvsp[-2].val) && (yyvsp[-2].val) < (yyvsp[0].val)); }
-#line 1175 "calc2.tab.c"
+#line 1186 "calc2.tab.c"
     break;
 
   case 13: /* inputChain: expr GT expr LT expr  */
-#line 70 "hl6255.hwchecker.y"
+#line 82 "hl6255.hwchecker.y"
                                                   { (yyval.val) = ((yyvsp[-4].val) > (yyvsp[-2].val) && (yyvsp[-2].val) < (yyvsp[0].val)); }
-#line 1181 "calc2.tab.c"
+#line 1192 "calc2.tab.c"
     break;
 
   case 14: /* inputChain: expr LT expr GT expr  */
-#line 71 "hl6255.hwchecker.y"
+#line 83 "hl6255.hwchecker.y"
                                                   { (yyval.val) = ((yyvsp[-4].val) < (yyvsp[-2].val) && (yyvsp[-2].val) > (yyvsp[0].val)); }
-#line 1187 "calc2.tab.c"
+#line 1198 "calc2.tab.c"
     break;
 
   case 15: /* expr: expr PLUS expr  */
-#line 74 "hl6255.hwchecker.y"
+#line 86 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
-#line 1193 "calc2.tab.c"
+#line 1204 "calc2.tab.c"
     break;
 
   case 16: /* expr: expr MINUS expr  */
-#line 75 "hl6255.hwchecker.y"
+#line 87 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
-#line 1199 "calc2.tab.c"
+#line 1210 "calc2.tab.c"
     break;
 
   case 17: /* expr: expr MUL expr  */
-#line 76 "hl6255.hwchecker.y"
+#line 88 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
-#line 1205 "calc2.tab.c"
+#line 1216 "calc2.tab.c"
     break;
 
   case 18: /* expr: expr DIV expr  */
-#line 77 "hl6255.hwchecker.y"
-                                        { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val); }
-#line 1211 "calc2.tab.c"
+#line 89 "hl6255.hwchecker.y"
+                                        { 
+            if ((yyvsp[0].val) == 0) {
+                divisionByZeroError = true;
+                (yyval.val) = 0; // Use -1 to indicate division by zero error
+            } else {
+                (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val);
+            }
+        }
+#line 1229 "calc2.tab.c"
     break;
 
   case 20: /* expr: LPAREN expr RPAREN  */
-#line 79 "hl6255.hwchecker.y"
+#line 98 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-1].val); }
-#line 1217 "calc2.tab.c"
+#line 1235 "calc2.tab.c"
     break;
 
 
-#line 1221 "calc2.tab.c"
+#line 1239 "calc2.tab.c"
 
       default: break;
     }
@@ -1410,7 +1428,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 82 "hl6255.hwchecker.y"
+#line 101 "hl6255.hwchecker.y"
 
 
 int main()

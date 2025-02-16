@@ -72,7 +72,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 15 "hl6255.hwchecker.y"
+#line 16 "hl6255.hwchecker.y"
 
     int val;
     /* You may include additional fields as you want. */

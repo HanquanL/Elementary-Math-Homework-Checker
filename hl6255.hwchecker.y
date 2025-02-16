@@ -4,12 +4,13 @@
 #include <string>
 int yylex(); // A function that is to be generated and provided by flex,
              // which returns a next token when called repeatedly.
-int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
+int yyerror(const char *p) { std::cerr << "Error: " << p << std::endl; };
 
 std::vector<std::string> outputResults;
 std::vector<std::string> inputExpres;
 int lineNumber = 1;
 int expectedLineNumber = 1;
+bool divisionByZeroError = false; 
 %}
 
 %union {
@@ -45,11 +46,21 @@ prog : expr_list                        {
      ;
 
 expr_list : comparison '\n'                   { 
-            outputResults.push_back($1 ? "Yes" : "No"); 
+            if (divisionByZeroError) {
+                outputResults.push_back("Error: Division By Zero");
+                divisionByZeroError = false;
+            } else {
+                outputResults.push_back($1 ? "Yes" : "No");
+            }
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string($1));
         }
           | expr_list comparison '\n'         { 
-            outputResults.push_back($2 ? "Yes" : "No"); 
+            if (divisionByZeroError) {
+                outputResults.push_back("Error: Division By Zero");
+                divisionByZeroError = false;
+            } else {
+                outputResults.push_back($2 ? "Yes" : "No");
+            }
             inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string($2));
         }
           ;
@@ -75,7 +86,14 @@ inputChain : expr GT expr GT expr                 { $$ = ($1 > $3 && $3 > $5); }
 expr : expr PLUS expr                   { $$ = $1 + $3; }
      | expr MINUS expr                  { $$ = $1 - $3; }
      | expr MUL expr                    { $$ = $1 * $3; }
-     | expr DIV expr                    { $$ = $1 / $3; }
+     | expr DIV expr                    { 
+            if ($3 == 0) {
+                divisionByZeroError = true;
+                $$ = 0; // Use -1 to indicate division by zero error
+            } else {
+                $$ = $1 / $3;
+            }
+        }
      | NUM                              /* default action: { $$ = $1; } */
      | LPAREN expr RPAREN               { $$ = $2; }
      ;
