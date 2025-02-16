@@ -453,9 +453,10 @@ char *yytext;
 #include <stdlib.h>
 #include "calc2.tab.h"
 
-extern int lineNumber; // Declare the external lineNumber variable
-#line 458 "lex.yy.c"
+extern int lineNumber; 
+extern int expectedLineNumber;
 #line 459 "lex.yy.c"
+#line 460 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -672,12 +673,12 @@ YY_DECL
 		}
 
 	{
-#line 11 "hl6255.hwchecker.l"
+#line 12 "hl6255.hwchecker.l"
 
-#line 13 "hl6255.hwchecker.l"
+#line 14 "hl6255.hwchecker.l"
                         /* 'val' in 'yylval.val' is the field declared in
                            calc2.y with the %union directive. */
-#line 681 "lex.yy.c"
+#line 682 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -736,67 +737,72 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "hl6255.hwchecker.l"
-{/* Ignore line number prefix */ }
+#line 16 "hl6255.hwchecker.l"
+{lineNumber = atoi(yytext); 
+                          if (lineNumber != expectedLineNumber) {
+                              std::cerr << "error: Line number out of sequence" << std::endl;
+                              exit(1);
+                          }
+                          expectedLineNumber++; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "hl6255.hwchecker.l"
+#line 22 "hl6255.hwchecker.l"
 { yylval.val = atoi(yytext); return NUM; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 17 "hl6255.hwchecker.l"
+#line 23 "hl6255.hwchecker.l"
 { return PLUS; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 18 "hl6255.hwchecker.l"
+#line 24 "hl6255.hwchecker.l"
 { return MINUS; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 19 "hl6255.hwchecker.l"
+#line 25 "hl6255.hwchecker.l"
 { return MUL; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 20 "hl6255.hwchecker.l"
+#line 26 "hl6255.hwchecker.l"
 { return DIV; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 21 "hl6255.hwchecker.l"
+#line 27 "hl6255.hwchecker.l"
 { return LPAREN; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 22 "hl6255.hwchecker.l"
+#line 28 "hl6255.hwchecker.l"
 { return RPAREN; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 23 "hl6255.hwchecker.l"
-{ ++lineNumber; return '\n'; } // Increment line number on newline
+#line 29 "hl6255.hwchecker.l"
+{ return '\n'; } // Increment line number on newline
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 24 "hl6255.hwchecker.l"
+#line 30 "hl6255.hwchecker.l"
 { /* Ignore white characters. */ }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 25 "hl6255.hwchecker.l"
-{ std::cerr << "Invalid token" << std::endl; exit(1); }
+#line 31 "hl6255.hwchecker.l"
+{ std::cerr << "Invalid token" << yytext << std::endl; exit(1); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 27 "hl6255.hwchecker.l"
+#line 33 "hl6255.hwchecker.l"
 ECHO;
 	YY_BREAK
-#line 800 "lex.yy.c"
+#line 806 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1801,6 +1807,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 27 "hl6255.hwchecker.l"
+#line 33 "hl6255.hwchecker.l"
 
 

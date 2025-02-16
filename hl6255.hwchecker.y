@@ -9,6 +9,7 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 std::vector<int> outputResults;
 std::vector<std::string> inputExpres;
 int lineNumber = 1;
+int expectedLineNumber = 1;
 %}
 
 %union {
@@ -43,11 +44,11 @@ prog : expr_list                        {
 
 expr_list : expr '\n'                   { 
             outputResults.push_back($1); 
-            inputExpres.push_back(std::to_string(lineNumber++) + ": " + std::to_string($1));
+            inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string($1));
         }
           | expr_list expr '\n'         { 
             outputResults.push_back($2); 
-            inputExpres.push_back(std::to_string(lineNumber++) + ": " + std::to_string($2));
+            inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string($2));
         }
           ;
 

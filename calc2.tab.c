@@ -79,8 +79,9 @@ int yyerror(const char *p) { std::cerr << "error: " << p << std::endl; };
 std::vector<int> outputResults;
 std::vector<std::string> inputExpres;
 int lineNumber = 1;
+int expectedLineNumber = 1;
 
-#line 84 "calc2.tab.c"
+#line 85 "calc2.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -509,8 +510,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    37,    37,    44,    48,    54,    55,    56,    57,    58,
-      59
+       0,    38,    38,    45,    49,    55,    56,    57,    58,    59,
+      60
 };
 #endif
 
@@ -1077,65 +1078,65 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* prog: expr_list  */
-#line 37 "hl6255.hwchecker.y"
+#line 38 "hl6255.hwchecker.y"
                                         { 
             for (size_t i = 0; i < outputResults.size(); ++i) {
                 std::cout << (i + 1) << ": " << outputResults[i] << std::endl;
             }
         }
-#line 1087 "calc2.tab.c"
+#line 1088 "calc2.tab.c"
     break;
 
   case 3: /* expr_list: expr '\n'  */
-#line 44 "hl6255.hwchecker.y"
+#line 45 "hl6255.hwchecker.y"
                                         { 
             outputResults.push_back((yyvsp[-1].val)); 
-            inputExpres.push_back(std::to_string(lineNumber++) + ": " + std::to_string((yyvsp[-1].val)));
+            inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
         }
-#line 1096 "calc2.tab.c"
+#line 1097 "calc2.tab.c"
     break;
 
   case 4: /* expr_list: expr_list expr '\n'  */
-#line 48 "hl6255.hwchecker.y"
+#line 49 "hl6255.hwchecker.y"
                                         { 
             outputResults.push_back((yyvsp[-1].val)); 
-            inputExpres.push_back(std::to_string(lineNumber++) + ": " + std::to_string((yyvsp[-1].val)));
+            inputExpres.push_back(std::to_string(lineNumber) + ": " + std::to_string((yyvsp[-1].val)));
         }
-#line 1105 "calc2.tab.c"
+#line 1106 "calc2.tab.c"
     break;
 
   case 5: /* expr: expr PLUS expr  */
-#line 54 "hl6255.hwchecker.y"
+#line 55 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val); }
-#line 1111 "calc2.tab.c"
+#line 1112 "calc2.tab.c"
     break;
 
   case 6: /* expr: expr MINUS expr  */
-#line 55 "hl6255.hwchecker.y"
+#line 56 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val); }
-#line 1117 "calc2.tab.c"
+#line 1118 "calc2.tab.c"
     break;
 
   case 7: /* expr: expr MUL expr  */
-#line 56 "hl6255.hwchecker.y"
+#line 57 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val); }
-#line 1123 "calc2.tab.c"
+#line 1124 "calc2.tab.c"
     break;
 
   case 8: /* expr: expr DIV expr  */
-#line 57 "hl6255.hwchecker.y"
+#line 58 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val); }
-#line 1129 "calc2.tab.c"
+#line 1130 "calc2.tab.c"
     break;
 
   case 10: /* expr: LPAREN expr RPAREN  */
-#line 59 "hl6255.hwchecker.y"
+#line 60 "hl6255.hwchecker.y"
                                         { (yyval.val) = (yyvsp[-1].val); }
-#line 1135 "calc2.tab.c"
+#line 1136 "calc2.tab.c"
     break;
 
 
-#line 1139 "calc2.tab.c"
+#line 1140 "calc2.tab.c"
 
       default: break;
     }
@@ -1328,7 +1329,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 62 "hl6255.hwchecker.y"
+#line 63 "hl6255.hwchecker.y"
 
 
 int main()
