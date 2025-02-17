@@ -18,7 +18,7 @@ EXECUTABLE = hl6255.hwchecker
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(LEX_OUTPUT) $(YACC_OUTPUT)
-	$(CXX) -o $@ $(LEX_OUTPUT) $(YACC_OUTPUT) -lfl
+	$(CXX) -o $@ $(LEX_OUTPUT) $(YACC_OUTPUT)
 
 $(LEX_OUTPUT): $(LEX_FILE)
 	$(FLEX) -o $@ $<
