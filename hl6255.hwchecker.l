@@ -19,7 +19,8 @@ extern int yyerror(const char *p);
                               exit(1);
                           }
                           expectedLineNumber++; }
--?[0-9]+                { yylval.val = atoi(yytext); return NUM; }
+[0-9]+                { yylval.val = atoi(yytext); return NUM; }
+[0-9]+                { yylval.val = atoi(yytext); return NUM; }
 "+"                     { return PLUS; }
 "-"                     { return MINUS; }
 "*"                     { return MUL; }

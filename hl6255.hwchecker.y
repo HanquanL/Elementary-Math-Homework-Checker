@@ -36,6 +36,8 @@ bool divisionByZeroError = false;
 %left DIV MUL
 %left LPAREN RPAREN 
 
+%precedence NEGATIVE
+
 %%
 
 prog : expr_list                        { 
@@ -85,11 +87,12 @@ inputChain : expr GT expr GT expr                 { $$ = ($1 > $3 && $3 > $5); }
 
 expr : expr PLUS expr                   { $$ = $1 + $3; }
      | expr MINUS expr                  { $$ = $1 - $3; }
+     | MINUS expr %prec NEGATIVE        { $$ = -$2;}
      | expr MUL expr                    { $$ = $1 * $3; }
      | expr DIV expr                    { 
             if ($3 == 0) {
                 divisionByZeroError = true;
-                $$ = 0; // Use -1 to indicate division by zero error
+                $$ = 0; 
             } else {
                 $$ = $1 / $3;
             }

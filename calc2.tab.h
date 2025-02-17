@@ -63,7 +63,8 @@ extern int yydebug;
     EQ = 264,                      /* EQ  */
     GT = 265,                      /* GT  */
     LT = 266,                      /* LT  */
-    NUM = 267                      /* NUM  */
+    NUM = 267,                     /* NUM  */
+    NEGATIVE = 268                 /* NEGATIVE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -78,7 +79,7 @@ union YYSTYPE
     /* You may include additional fields as you want. */
     /* char op; */
 
-#line 82 "calc2.tab.h"
+#line 83 "calc2.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
