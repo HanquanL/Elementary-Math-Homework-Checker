@@ -1,7 +1,7 @@
 %{
 #include <iostream>
 #include <stdlib.h>
-#include "calc2.tab.h"
+#include "hl6255.hwchecker.tab.h"
 
 extern int lineNumber; 
 extern int expectedLineNumber;
